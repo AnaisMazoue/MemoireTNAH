@@ -1,0 +1,40 @@
+	\chapter{\label{Fonctions}Création de fonctions}
+	
+	\section{Fonction trail\_page}
+	\begin{minted}{python}
+    def trail_page(title, trail_name, trails):
+            return render_template(
+            "pages/trail.html",
+            title=title,
+            id=trail_name,
+            trail=trails[trail_name],            
+            #permet de retirer le parcours où l'on se trouve du carrousel:
+            carousel_items=remove_item(trails, trail_name),
+        )
+    \end{minted}
+    
+	\section{Fonction glossary}
+	\begin{minted}{python}
+    def glossary():
+        list_persons = sorted(persons.values(), key=lambda d: d["name"])
+        return render_template(
+            "pages/glossary.html",
+            title="Glossary",
+            persons=list_persons,
+            theme=main_pages["glossary"],
+        )
+    \end{minted}
+    
+	\section{Fonction bibliography}
+    \begin{minted}{python}
+    def bibliography():
+        list_books = sorted(books.values(), key=lambda d: d["author"], reverse=False)
+        list_articles = sorted(articles.values(), key=lambda d: d["author"])
+        return render_template(
+            "pages/bibliography.html",
+            title="Bibliography",
+            books=list_books,
+            articles=list_articles,
+            theme=main_pages["bibliography"],
+        )
+    \end{minted}

@@ -1,0 +1,556 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{minted} % colored source code
+
+% configurer le document selon les normes de l'École
+\usepackage[margin=2.5cm]{geometry} %marges
+\usepackage{setspace} % espacement qui permet ensuite de définir un interligne
+\onehalfspacing % interligne de 1.5
+\setlength\parindent{1cm} % indentation des paragraphes Ã  1 cm
+
+\title{Templates}
+\author{anais.mazoue }
+\date{September 2022}
+
+\begin{document}
+\section{\textit{Template} pour les pages de thèmes}
+\begin{minted}{html}
+{% extends "layout/layout.html" %}
+{% block headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    {% include "elements/cards/cards.html" %}
+    {% include "elements/carousel/carousel.html" %}
+    {% include "elements/parallax/parallax.html" %}
+
+    <style>
+        #{{ id }}-cards{
+            padding: 2em;
+            background-color: {% if theme.color %}{{ theme.color }}
+            {% else %}var(--alfa-light-blue){% endif %};
+        }
+
+        #{{ id }}-carousel{
+            background-color: var(--alfa-blue);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% include "elements/parallax/parallax.html" %}
+
+    <div class="jumbotron jumbotron-fluid" id="{{ id }}-cards">
+        <div class="container">
+            {% include "elements/cards/cards.html" %}
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid footer-carousel" id="{{ id }}-carousel">
+        <div class="container">
+            {% include "elements/carousel/carousel.html" %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+\end{minted}
+
+\section{\textit{Template} pour les pages de parcours}
+\begin{minted}{html}
+% extends "layout/layout.html" %}
+{% block headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    {% include "elements/exhibit/exhibit.html" %}
+    {% include "elements/carousel/carousel.html" %}
+
+    <style>
+        #{{ id }}-footer{
+        background-color: {% if trail.color %}{{ trail.color }}
+        {% else %}var(--alfa-light-blue){% endif %};
+        }
+    </style>
+{% endblock %}
+
+
+{% block content %}
+    {% include "elements/exhibit/exhibit.html" %}
+
+    <div id="{{ id }}-footer" class="jumbotron jumbotron-fluid">
+        <div class="container">
+            {% include "elements/carousel/carousel.html" %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+\end{minted}
+
+\section{\textit{Template} pour les parallax}
+\begin{minted}{html}
+{% if context == "css" %}
+    <style>
+        .section.image {
+            padding-top: 140px;
+            padding-bottom: 100px;
+            background-position: 50% 50%;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .lead {
+            font-size: 20px;
+            color: whitesmoke;
+            background-color: {% if theme.category %}{{ theme.parallax }}{% endif %};
+            padding: 1em;
+            border-radius: 1em;
+            width: fit-content;
+            margin: auto;
+        }
+
+        #parallax-title {
+            font-weight: bold;
+            text-shadow: #331700FF 0 0 25px,
+            #331700FF 0 0 25px;
+            color: white;
+        }
+
+        #parallax-subtitle {
+            font-weight: bold;
+            text-shadow: #331700FF 0 0 25px,
+            #331700FF 0 0 25px;
+            color: white;
+        }
+
+    </style>
+{% elif context == "html" %}
+    <div class="section image jumbotron-fluid" style="background-image: url({{ theme.img }})">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 id="parallax-title" class="page-title">{{ theme.header }} {{ theme.title }}</h1>
+                </div>
+                <div class="col-md-10 offset-md-1">
+                    <h3 id="parallax-subtitle">{{ theme.subtitle }}</h3>
+                    <p class="lead">{{ theme.category }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+\end{minted}
+
+\section{\textit{Template} pour les carrousels}
+\begin{minted}{html}
+{% if context == "css" %}
+    <style>
+        /*CAROUSEL*/
+        .carousel-indicators{
+            list-style: none;
+        }
+
+        .carousel-item img {
+         margin: auto;
+        }
+        .carousel-item {
+            margin: auto;
+        }
+
+        .carousel-caption {
+            color: var(--grey-blue);
+        }
+
+        #carousel {
+            margin: 1em;
+        }
+
+        .item__heading {
+            font-weight: bold;
+            text-shadow: #331700FF 0 0 25px,
+            #331700FF 0 0 25px;
+            color: white;
+        }
+
+        .item {
+            overflow: hidden;
+            position: relative;
+            height: 200px;
+            margin: auto;
+            border-radius: var(--spacing-l);
+        }
+
+        .img-item {
+            position: absolute;
+            width: 100%;
+            min-height: 100%;
+            background-size: cover;
+            -moz-background-size: cover;
+            -webkit-background-size: cover;
+            background-position: center;
+            bottom: 0;
+            filter: brightness(0.8) saturate(1.1) contrast(0.9);
+            left: 50%;
+            right: 0;
+            top:50%;
+            transform-origin: center;
+            transform: scale(1.05) translateZ(0) translate(-50%,-40%);
+            -webkit-transform: translate(-50%,-40%);
+            -ms-transform: translate(-50%,-40%);
+            transition:
+                    filter 300ms linear,
+                    transform 200ms linear;
+
+            box-shadow: 13px 10px 54px -7px rgba(0,0,0,0.63) inset;
+            -webkit-box-shadow: 13px 10px 54px -7px rgba(0,0,0,0.63) inset;
+            -moz-box-shadow: 13px 10px 54px -7px rgba(0,0,0,0.63) inset;
+        }
+
+        .img-item:hover {
+            transform: translate(-50%,-40%);
+            filter: brightness(0.9);
+        }
+    </style>
+{% elif context == "html" %}
+    {% set item_keys = carousel_items.keys()|list %}
+
+    <div id="carousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% set i = 0 %}
+            {% for key in carousel_items %}
+                <li data-target="#paths-footer" data-slide-to="{{ i }}" {% if i == 0 %}class="active"{% endif %}></li>
+                {% set i = i + 1 %}
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+            {% set active = item_keys[0] %}
+            {% for key, item in carousel_items.items() %}
+                {% include "elements/carousel/carousel-item.html" %}
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+{% elif context == "js" %}
+{% endif %}
+
+\end{minted}
+
+\section{\textit{Template} pour les \textit{cards}}
+\subsection{\textit{Template} pour les éléments composant une unique \textit{card}}
+\begin{minted}{html}
+<a class="card" href="{{ card.url }}">
+    <div class="card__background" style="background-image: url({{ card.img }})"></div>
+    <div class="card__content">
+        <p class="card__category">{{ card.category }}</p>
+        <h3 class="card__heading">{{ card.header }}</h3>
+    </div>
+</a>
+\end{minted}
+
+\subsection{\textit{Template} pour les grilles de \textit{cards}}
+\begin{minted}{html}
+{% if context == "css" %}
+    <style>
+        /*CARDS*/
+        .hero-section{
+            align-items: flex-start;
+            display: flex;
+            min-height: 100%;
+            justify-content: center;
+            padding: var(--spacing-xxl) var(--spacing-l);
+        }
+
+        .card-grid{
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-column-gap: var(--spacing-l);
+            grid-row-gap: var(--spacing-l);
+            max-width: var(--width-container);
+            width: 100%;
+        }
+
+        @media(min-width: 540px){
+            .card-grid{
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(min-width: 960px){
+            .card-grid{
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card{
+            list-style: none;
+            position: relative;
+            background-color: #fff0!important;
+        }
+
+        .card:before{
+            content: '';
+            display: block;
+            padding-bottom: 150%;
+            width: 100%;
+        }
+
+        .card__background{
+            background-size: cover;
+            background-position: center;
+            border-radius: var(--spacing-l);
+            bottom: 0;
+            filter: brightness(0.7) saturate(1.1) contrast(0.85);
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform-origin: center;
+            transform: scale(1) translateZ(0);
+            transition:
+                    filter 300ms linear,
+                    transform 200ms linear;
+        }
+
+        .card:hover .card__background {
+            transform: scale(1.05) translateZ(0);
+        }
+
+        .card-grid:hover > .card:not(:hover) .card__background{
+            filter: brightness(0.8) contrast(1.2) blur(1px);
+        }
+
+        .card__content{
+            left: 0;
+            padding: var(--spacing-l);
+            position: absolute;
+            top: 0;
+            text-align: center;
+            min-width: 100%;
+        }
+
+        .card__category{
+            color: var(--text-light);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-bottom: var(--spacing-s);
+            text-transform: uppercase;
+        }
+
+        .card__heading{
+            color: var(--text-lighter);
+            font-size: 1.9rem;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
+            text-align: center !important;
+            line-height: 1.4;
+            {#word-spacing: 100vw;#}
+        }
+
+        img {
+            text-align: center;
+        }
+    </style>
+{% elif context == "html" %}
+    <div class="card-grid">
+        {% for card in cards %}
+            {% include "elements/cards/card.html" %}
+        {% endfor %}
+    </div>
+{% elif context == "js" %}
+{% endif %}
+\end{minted}
+
+\section{\textit{Template} pour les \textit{exhibits}}
+\begin{minted}{html}
+{% if context == "css" %}
+    <style>
+        .exhibit{
+            background-color: #000000;
+            min-height: 850px;
+            padding-top: 70px;
+            padding-bottom: 50px;
+            {#height: 95vh;#}
+        }
+        iframe {
+            width: 90vw;
+            height: 750px;
+        }
+        .exhibit-title {
+            color: whitesmoke;
+            padding-top: 3rem;
+        }
+    </style>
+
+
+{% elif context == "html" %}
+    <div class="jumbotron-fluid exhibit container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-title exhibit-title">{{ title }}</h1>
+            </div>
+            <div class="col-md-12">
+                <iframe src="{{ trail.exhibit }}?embedded=true" allowfullscreen allow="autoplay" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+{% elif context == "js" %}
+{% endif %}
+
+\end{minted}
+
+\section{\textit{Template} pour les items du glossaire}
+\begin{minted}{html}
+{% if context == "css" %}
+    <style>
+        .icon-wrapper {
+            margin-bottom: 11px;
+        }
+        .svg-icon {
+            padding-right: 10px;
+            opacity: 0.26;
+            -webkit-transition: all 200ms ease;
+            transition: all 200ms ease;
+            margin-top: -3px;
+            height: 20px;
+        }
+        .svg-icon:hover {
+            opacity: 1;
+        }
+        tr, a {
+            color: whitesmoke;
+        }
+        a:hover {
+            color: var(--alfa-light-blue);
+            text-decoration: underline;
+        }
+        .biblissima {
+            margin-bottom: 8px;
+        }
+        .shelfmark {
+            font-weight: bold;
+        }
+        .td-left {
+            text-align: left;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+    </style>
+{% elif context == "html" %}
+    <tr>
+        <th scope="row">{{ person.name }}</th>
+        <td>{{ person.biography }}</td>
+        <td class="td-left add-lg">
+            {% for ms in person.attention_points %}
+                <span class="shelfmark">{{ ms }}</span>:
+                {% for ap in person.attention_points[ms] %}
+                    <a href="{{ person.attention_points[ms][ap] }}" target="_blank">{{ ap }}</a>{% if loop.index != person.attention_points[ms]|length %}, {% else %}.{% endif %}
+                {% endfor %}
+                <br>
+            {% endfor %}
+        </td>
+        <td class="icon-wrapper">
+            {% if person.url %}
+                <a href="{{ person.url }}" class="w-inline-block">
+                    <img class="svg-icon" src="{{url_for('static', filename='img/logos/wikipedia.svg')}}"
+                         alt="Go to wikipedia page"/>
+                </a>
+            {% endif %}
+            {% if person.id_biblissima %}
+                <a href="https://data.biblissima.fr/w/Item:{{ person.id_biblissima }}" class="w-inline-block">
+                    <img class="svg-icon biblissima" src="{{url_for('static', filename='img/logos/biblissima.svg')}}"
+                         alt="Go to biblissima page"/>
+                </a>
+            {% endif %}
+        </td>
+    </tr>
+{% elif context == "js" %}
+{% endif %}
+
+\end{minted}
+
+\section{\textit{Template} pour les éléments de bibliographie}
+\subsection{\textit{Template} pour ajouter un livre}
+\begin{minted}{html}
+{% if context == "css" %}
+    <style>
+
+    </style>
+
+{% elif context == "html" %}
+    <li class="bibliography-item">
+        {% for author in book.author %}
+            {{ author }}{% if book.title or book.pages or book.publisher or book.place or book.year or book.url %}, {% else %}.{% endif %}
+        {% endfor %}
+        {% if book.title %}
+            <span class="book-title">{{book.title}}</span>{% if book.pages or book.publisher or book.place or book.year or book.url %}, {% else %}.{% endif %}
+        {% endif %}
+        {% if book.pages %}
+            {{book.pages}}{% if book.publisher or book.place or book.year or book.url %}, {% else %}.{% endif %}
+        {% endif %}
+        {% if book.publisher %}
+            {{book.publisher}}{% if book.place or book.year or book.url %}, {% else %}.{% endif %}
+        {% endif %}
+        {% if book.place %}
+            {{book.place}}{% if book.year or book.url  %}, {% else %}.{% endif %}
+        {% endif %}
+        {% if book.year %}
+            {{book.year}}{% if book.url %}, {% else %}.{% endif %}
+        {% endif %}
+        {% if book.url %}
+            [Online: <a href="{{book.url}}" target="_blank">{{book.url}}</a>].
+        {% endif %}
+    </li>
+
+{% elif context == "js" %}
+{% endif %}
+
+\end{minted}
+
+\subsection{\textit{Template} pour ajouter un article}
+\begin{minted}{html}
+{% if context == "css" %}
+    <style>
+
+    </style>
+
+{% elif context == "html" %}
+    <li class="bibliography-item">
+        {% for author in article.author %}
+            {{ author}}{{ author }}{% if article.title or article.publisher or article.place or article.year or article.pages or article.url %}, {% else %}.{% endif %}
+        {% endfor %}
+        {% if article.title%}
+            "{{article.title}}"{% if article.publisher or article.place or article.year or article.pages or article.url %}, {% else %}.{% endif %}
+        {% endif %}
+        <span class="book-title">{{article.journal}}</span>
+        {% if article.publisher %}
+            {article.publisher}}{% if article.place or article.year or article.pages or article.url %}, {% else %}.{% endif %}
+        {% endif %}
+        {% if article.place %}
+            {{article.place}}{% if article.year or article.pages or article.url %}, {% else %}.{% endif %}
+        {% endif %}
+        {% if article.year %}
+            {{article.year}}{% if article.pages or article.url %}, {% else %}.{% endif %}
+        {% endif %}
+        {% if article.pages %}
+            {{article.pages}}{% if article.url %}, {% else %}.{% endif %}
+        {% endif %}
+        {% if article.url %}
+            [Online: <a href="{{article.url}}" target="_blank">{{article.url}}</a>]
+        {% endif %}
+    </li>
+
+{% elif context == "js" %}
+{% endif %}
+
+\end{minted}
+
+\end{document}

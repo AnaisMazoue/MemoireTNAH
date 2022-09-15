@@ -1,0 +1,221 @@
+% document vide aux normes de l'École pour le mémoire
+
+% PREAMBULE
+
+%package obligatoire : type de document
+\documentclass[a4paper,12pt,twoside]{book}
+
+% encodage
+\usepackage{fontspec}
+
+% Annexes (à déclarer avant hyperref)
+\usepackage{appendix}
+
+%avec overleaf, utiliser :
+\usepackage[xetex]{hyperref}
+\hypersetup{
+pdfauthor = {Anaïs Mazoué},
+pdftitle = {\textit{Medieval skies under(book)cover}
+ : scénographie d'une exposition de manuscrits astronomiques sur le web},
+pdfsubject = {astronomie alphonsine},
+pdfkeywords = {exposition virtuelle} {astronomie alphonsine} {Observatoire de Paris} {humanités numériques}
+}
+
+%il faut mettre au moins une langue
+\usepackage[english,french]{babel}
+
+\usepackage{minted} % colored source code
+
+% configurer le document selon les normes de l'École
+\usepackage[margin=2.5cm]{geometry} %marges
+\usepackage{setspace} % espacement qui permet ensuite de définir un interligne
+\onehalfspacing % interligne de 1.5
+\setlength\parindent{1cm} % indentation des paragraphes Ã  1 cm
+
+% Pour retirer le titre courant d'une page vide avant un chapitre
+%\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+
+\usepackage{lettrine} % lettrines (pas obligatoire)
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{pdfpages}
+\usepackage{pdflscape} % pour inclure des pdf en format paysage
+\usepackage[babel]{csquotes}
+
+\usepackage[automake,acronym,toc]{glossaries}
+\makeglossaries
+
+\newacronym{alfa}{ALFA}{\textit{The shaping of a European scientific Scene : Alfonsine Astronomy}}
+\newacronym{api}{API}{\textit{Application Programming Interface}}
+\newacronym{bav}{BAV}{\textit{Biblioteca Apostolica Vaticana}}
+\newacronym{bis}{BIS}{Bibliothèque interuniversitaire de la Sorbonne}
+\newacronym{bl}{BL}{\textit{British Library}}
+\newacronym{bne}{BNE}{\textit{Biblioteca Nacional de España}}
+\newacronym{bnf}{BnF}{Bibliothèque nationale de France}
+\newacronym{cines}{CINES}{Centre Informatique National de l’Enseignement Supérieur}
+\newacronym{cnrs}{CNRS}{Centre national de la recherche scientifique}
+\newacronym{css}{CSS}{\textit{Cascading Style Sheets}}
+\newacronym{dh}{DH}{\textit{Digital Humanities}}
+\newacronym{dishas}{DISHAS}{\textit{Digital Information System for the History of Astral Sciences}}
+\newacronym{enc}{ENC}{École nationale des chartes}
+\newacronym{ens}{ENS}{École normale supérieure}
+\newacronym{erc}{ERC}{\textit{European Research Council}}
+\newacronym{fair}{FAIR}{\textit{Findable Accessible Interoperable Reusable}}
+\newacronym{hamsi}{HAMSI}{\textit{History of Astronomical and Mathematical Sciences in India}}
+\newacronym{html}{HTML}{\textit{Hypertext Markup Language}}
+\newacronym{iiif}{IIIF}{\textit{International Image Interoperability Framework}}
+\newacronym{inha}{INHA}{Institut national d'histoire de l'art}
+\newacronym{json}{JSON}{\textit{JavaScript Object Notation}}
+\newacronym{lc}{LC}{\textit{Library of Congress}}
+\newacronym{onb}{ÖNB}{\textit{Österreichische Nationalbibliothek}}
+\newacronym{pal}{PAL}{\textit{Ptolemaeus Arabus et Latinus}}
+\newacronym{psl}{PSL}{Paris Sciences \& Lettres}
+\newacronym{rbme}{RBME}{\textit{Real Biblioteca del Monasterio de El Escorial}}
+\newacronym{svg}{SVG}{\textit{Scalable Vector Graphics}}
+\newacronym{syrte}{SYRTE}{Systèmes de Référence Temps-Espace}
+\newacronym{tnah}{TNAH}{Technologies numériques appliquées à l'histoire}
+\newacronym{ub}{UB}{\textit{Universitätsbibliothek}}
+\newacronym{url}{URL}{\textit{Uniform Resource Locator}}
+\newacronym{ux}{UX}{\textit{User eXperience}}
+\newacronym{xml}{xml} {\textit{eXtensible Markup Language}}
+
+% bibliographie
+\usepackage[backend=biber, sorting=nyt, style=enc]{biblatex}
+% \addbibresource{bibliographie/astronomie.bib}
+% \addbibresource{bibliographie/scenographie.bib}
+% \addbibresource{bibliographie/humanum.bib}
+% \addbibresource{bibliographie/iiif.bib}
+% \addbibresource{bibliographie/ux.bib}
+\addbibresource{bibliographie/biblio.bib}
+\nocite{*}
+\defbibnote{intro}{Les ressources utilisées, citées ou non, sont présentes par ordre alphabétique dans cette bibliographie.}
+
+\author{Anaïs Mazoué - M2 TNAH}
+\title{\textit{Medieval skies under(book)cover} : scénographie d'une exposition de manuscrits astronomiques sur le web}
+
+% DOCUMENT
+\begin{document}
+	\begin{titlepage}
+		\begin{center}
+			
+			\bigskip
+			
+			\begin{large}				
+				ÉCOLE NATIONALE DES CHARTES\\
+				UNIVERSITÉ PARIS, SCIENCES \& LETTRES
+			\end{large}
+			\begin{center}\rule{2cm}{0.02cm}\end{center}
+			
+			\bigskip
+			\bigskip
+			\bigskip
+			\begin{Large}
+				\textbf{Anaïs Mazoué}\\
+			\end{Large}
+			\begin{normalsize} 
+			    \textit{licenciée ès lettres}
+			    
+				\textit{diplômée de master en histoire}
+			\end{normalsize}
+			
+			\bigskip
+			\bigskip
+			\bigskip
+			
+			\begin{Huge}
+				\textbf{\textit{Medieval skies under(book)cover}}\\
+			\end{Huge}
+			\bigskip
+			\bigskip
+			\begin{LARGE}
+				\textbf{Scénographie d'une exposition de manuscrits astronomiques sur le web}\\
+			\end{LARGE}
+			
+			\bigskip
+			\bigskip
+			\bigskip
+			\begin{large}
+			\end{large}
+			\vfill
+			
+			\begin{large}
+				Mémoire pour le diplôme de master \\
+				\og{} Technologies numériques appliquées à l'histoire \fg{} \\
+				\bigskip
+				2022
+			\end{large}
+			
+		\end{center}
+	\end{titlepage}
+	
+	\thispagestyle{empty}	
+	\cleardoublepage
+	
+	\frontmatter
+	\include{resume}
+	
+	\include{remerciements}
+
+	
+% Bibliographie
+	% Pour afficher seulement le titre général de la bibliographie
+	\printbibheading[heading=bibintoc]  
+	
+	\printbibliography[heading=subbibliography, keyword=astronomie,title={Histoire de l'astronomie}]
+	\printbibliography[heading=subbibliography, keyword=scenographie,title={Expositions et scénographie}]
+	\printbibliography[heading=subbibliography, keyword=humanum,title={Humanités numériques}]
+	\printbibliography[heading=subbibliography, keyword=iiif,title={\textit{International Image Interoperability Framework} (IIIF)}]
+	\printbibliography[heading=subbibliography, keyword=ux,title={Expérience utilisateur - \textit{UX design}}]
+
+	
+	\include{introduction}
+	
+	\thispagestyle{empty}
+	\cleardoublepage
+	
+	\mainmatter
+	
+	\include{chapitres/partie1}
+	
+	\include{chapitres/partie2}
+	
+	\include{chapitres/partie3}
+
+	\include{conclusion}
+	
+	%les annexes
+	\appendix
+	
+	\renewcommand{\appendixpagename}{Annexes}
+	% permet de  renommer en "Annexes" la page de titre "Appendices"
+	
+	\renewcommand{\appendixtocname}{Annexes}
+	% permet de renommer en "Annexes" le nom des annexes dans la table des matières
+	
+	\addappheadtotoc % permet d'ajouter les annexes à la table des matières
+	
+	\appendixpage % petmet de créer une page de titre pour les annexes
+
+    \include{annexes/APcommuns}    
+    \include{annexes/Séminaires}
+    \include{annexes/Tutoriel}
+    \include{annexes/Spécifications}
+    \include{annexes/Fonctions}
+    \include{annexes/ResponsiveScreen}
+
+% index Ã  mettre ici si index	
+%	\printindex
+
+%\printglossaries
+
+%imprimer séparément les deux listes
+%\printglossary
+\printglossary[type=\acronymtype]
+
+% si figures
+\listoffigures
+
+
+\tableofcontents
+	
+\end{document}
